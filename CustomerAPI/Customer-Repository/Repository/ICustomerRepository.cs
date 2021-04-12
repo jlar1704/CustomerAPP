@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Customer_Entity.Entity;
 
 namespace Customer_Repository.Repository
@@ -6,6 +7,7 @@ namespace Customer_Repository.Repository
 
     public interface ICustomerRepository
     {
-       
+        Customer GetCustomerById(int Id);
+        List<Customer> GetAllCustomers();
     }
 }
