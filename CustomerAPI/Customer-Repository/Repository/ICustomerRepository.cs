@@ -9,5 +9,7 @@ namespace Customer_Repository.Repository
     {
         Customer GetCustomerById(int Id);
         List<Customer> GetAllCustomers();
+        dynamic SaveCustomer(Customer customer);
+        dynamic DeleteCustomer(int customerid);
     }
 }

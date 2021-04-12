@@ -1,9 +1,120 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Customer</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons [hidden]="customer.id==0" slot="start">
+            <ion-button (click)="cancel()">
+                <ion-icon name="arrow-back-circle-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-buttons [hidden]="customer.id!=0" slot="start">
+            <ion-button (click)="cancel()">
+                <ion-label>Cancelar</ion-label>
+            </ion-button>
+        </ion-buttons>
+        <ion-title [hidden]="customer.id!=0">New Customer</ion-title>
+        <ion-title [hidden]="customer.id==0">Edit Customer</ion-title>
+        <ion-buttons slot="end">
+            <ion-button [disabled]="!customerfg.valid" (click)="save()">
+                <ion-icon name="save-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
+    <form (ngSubmit)="save()" [formGroup]="customerfg">
+        <ion-list>
+            <ion-list-header class="centrado">
+                <img class="circle-pic" src="assets/imgs/user.jpeg">
+            </ion-list-header>
+            <ion-button (click)="deleteCustomer()" fill="clear" expand="full">
+                <ion-icon name="trash-outline" color="danger"></ion-icon>
+                Delete Customer
+            </ion-button>
+
+            <br>
+
+            <ion-input ion-item class="margen" placeholder="RNC" type="text" formControlName="rnc"></ion-input>
+            <div *ngIf="(rnc.dirty || rnc.touched) && rnc.errors" class="errors">
+                <span *ngIf="rnc.errors?.required">RNC is Required</span>
+            </div>
+            <ion-input ion-item class="margen" placeholder="Name" type="text" formControlName="name"></ion-input>
+            <div *ngIf="(name.dirty || name.touched) && name.errors" class="errors">
+                <span *ngIf="name.errors?.required">Name is Required</span>
+            </div>
+        </ion-list>
+        <br>
+        <div formArrayName="customerAddreses" [hidden]="customerfg?.get('customerAddreses')['controls'].length==0" *ngFor="let adr of customerfg?.get('customerAddreses')['controls']; let i = index;">
+            <ion-list>
+                <div class="margen" [formGroupName]="i">
+                    <ion-row>
+                        <ion-col>
+                            <small>
+                              <ion-button (click)="deleteAddress(i)" fill="clear" expand="full">
+                                <ion-icon name="trash-outline" color="danger"></ion-icon>
+                                Delete Address
+                              </ion-button>
+                            </small>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <ion-item>
+                                <ion-input formControlName="countryId" placeholder="Country"></ion-input>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <ion-item>
+                                <ion-input formControlName="zone" placeholder="Zone"></ion-input>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="9">
+                            <ion-item>
+                                <ion-input formControlName="street" placeholder="Street"></ion-input>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col class="padding-left-2px">
+                            <ion-item>
+                                <ion-input formControlName="number" placeholder="#No."></ion-input>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <ion-item>
+                                <ion-input formControlName="postalCode" placeholder="Postal Code"></ion-input>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <ion-item>
+                                <ion-input formControlName="contact" placeholder="Contact Name"></ion-input>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <ion-item>
+                                <ion-input formControlName="phone" placeholder="Phone"></ion-input>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+
+                </div>
+            </ion-list>
+            <br>
+        </div>
+        <small>
+                <ion-button (click)="addAddress()" fill="clear" expand="full">
+                     <ion-icon name="add-circle-outline" color="success"></ion-icon>
+                      Add Address
+                </ion-button>
+                </small>
+
+    </form>
 
 </ion-content>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Customer_Entity.Entity;
 using Customer_Repository.Repository;
@@ -31,6 +32,24 @@ namespace CustomerAPI.Controllers
         [Route("~/[controller]/GetAllCustomers")]
         public List<Customer> GetAllCustomers()
         {
+            return _customerRepository.GetAllCustomers();
+        }
+
+        [HttpPost]
+        [Route("~/[controller]/SaveCustomer")]
+        public dynamic SaveCustomer([FromBody] JsonElement customer)
+        {
+            var data = Newtonsoft.Json.JsonConvert.DeserializeObject<Customer>(customer.GetRawText());
+
+            return _customerRepository.SaveCustomer(data);
+        }
+
+
+        [HttpDelete]
+        [Route("~/[controller]/DeleteCustomer/{Id}")]
+        public dynamic DeleteCustomer([FromBody] int customerid)
+        {
+            //  _customerRepository.DeleteCustomer(customerid);
             return _customerRepository.GetAllCustomers();
         }
     }
