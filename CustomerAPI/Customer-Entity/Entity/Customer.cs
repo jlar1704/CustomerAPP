@@ -16,7 +16,7 @@ namespace Customer_Entity.Entity
         [StringLength(300)]
         [Required]
         public string Name { get; set; }
-
+        
         [Required]
         public bool Active { get; set; }
 
@@ -27,7 +27,7 @@ namespace Customer_Entity.Entity
         [Required]
         public DateTime Created { get; set; }
 
-        public ICollection<CustomerAddres> CustomerAddreses { get; set; }
+        public virtual List<CustomerAddres> CustomerAddreses { get; set; }
 
     }
 }

@@ -103,7 +103,7 @@ export class CustomerPage implements OnInit {
 
   deleteAddress(id){
     (<FormArray>this.customerfg.get('customerAddreses')).removeAt(id);
-    this._customerDataService.SaveCustomer(this.customerfg.value);
+    this._customerDataService.DeleteAddressCustomer(id);
   }
 
   get rnc() {

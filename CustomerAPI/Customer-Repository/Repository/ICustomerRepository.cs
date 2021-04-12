@@ -11,5 +11,6 @@ namespace Customer_Repository.Repository
         List<Customer> GetAllCustomers();
         dynamic SaveCustomer(Customer customer);
         dynamic DeleteCustomer(int customerid);
+        dynamic DeleteAdressCustomer(int addressid);
     }
 }

@@ -24,6 +24,10 @@ export class CustomerDataService {
   }
 
   DeleteCustomer(id){
-      return this.http.delete<any>(`${environment.apiUrl}DeleteCustomer/${id}`);
+      return this.http.delete<any>(`${environment.apiUrl}DeleteCustomer?customerid=${id}`);
+  }
+
+  DeleteAddressCustomer(id){
+      return this.http.delete<any>(`${environment.apiUrl}DeleteAddressCustomer/${id}`);
   }
 }

@@ -46,10 +46,18 @@ namespace CustomerAPI.Controllers
 
 
         [HttpDelete]
-        [Route("~/[controller]/DeleteCustomer/{Id}")]
-        public dynamic DeleteCustomer([FromBody] int customerid)
+        [Route("~/[controller]/DeleteCustomer")]
+        public dynamic DeleteCustomer(int customerid)
         {
-            //  _customerRepository.DeleteCustomer(customerid);
+              _customerRepository.DeleteCustomer(customerid);
+            return _customerRepository.GetAllCustomers();
+        }
+
+        [HttpDelete]
+        [Route("~/[controller]/DeleteAdressCustomer")]
+        public dynamic DeleteAdressCustomer(int addressid)
+        {
+              _customerRepository.DeleteAdressCustomer(addressid);
             return _customerRepository.GetAllCustomers();
         }
     }

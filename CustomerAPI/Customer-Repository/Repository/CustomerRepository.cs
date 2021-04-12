@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Customer_Entity.Context;
 using Customer_Entity.Entity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Customer_Repository.Repository
@@ -46,7 +47,7 @@ namespace Customer_Repository.Repository
 
         public List<Customer> GetAllCustomers()
         {
-            var result = _customerContext.Customers.ToList();
+            var result = _customerContext.Customers.Include(t => t.CustomerAddreses).ToList();
 
             return result;
         }
@@ -61,6 +62,7 @@ namespace Customer_Repository.Repository
 
 
         }
+
 
         public dynamic DeleteCustomer(int customerid)
         {
@@ -101,6 +103,36 @@ namespace Customer_Repository.Repository
             return result;
         }
 
+        public dynamic DeleteAdressCustomer(int addressid)
+        {
+
+            var result = new ServiceResult<Customer>();
+
+            using (var scope = _customerContext.Database.BeginTransaction())
+            {
+
+                try
+                {
+                    var customerData = _customerContext.CustomerAddresses.Where(f => f.Id == addressid).FirstOrDefault();
+                    _customerContext.CustomerAddresses.Remove(customerData);
+                    _customerContext.SaveChanges();
+
+                    result.Data = null;
+                    result.Success = true;
+                    result.Message = "customer Adress Deleted Succesfully";
+                    scope.Commit();
+
+                }
+                catch (Exception ex)
+                {
+                    scope.Rollback();
+                    result.Success = false;
+                    result.Message = ex.Message;
+                }
+            }
+
+            return result;
+        }
 
 
         public dynamic SaveCustomer(Customer customer)
@@ -130,6 +162,11 @@ namespace Customer_Repository.Repository
                             {
                                 customerAddres.CreatedUserid = "0";
                                 customerAddres.Created = new DateTime();
+                            }
+                            else {
+                                customerAddres.CreatedUserid = "0";
+                                customerAddres.Created = new DateTime();
+                                _customerContext.CustomerAddresses.Update(customerAddres);
                             }
 
                         }
