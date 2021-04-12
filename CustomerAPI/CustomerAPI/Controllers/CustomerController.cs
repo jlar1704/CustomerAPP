@@ -8,12 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CustomerAPI.Controllers
 {
-    public class CustomerController : Controller
+    public class CustomerController : ControllerBase
     {
-        // GET: /<controller>/
-        public IActionResult Index()
-        {
-            return View();
-        }
+        
     }
 }
